@@ -5,10 +5,7 @@ output:
     keep_md: true
 ---
 
-
-
 ## Loading and preprocessing the data
-
 
 ``` r
 unzip("activity.zip")
@@ -16,7 +13,6 @@ data <- read.csv("activity.csv", colClasses = c("numeric", "Date", "numeric"))
 ```
 
 ## What is mean total number of steps taken per day?
-
 
 ``` r
 steps_per_day <- aggregate(steps ~ date, data, sum, na.rm = TRUE)
@@ -28,7 +24,7 @@ hist(steps_per_day$steps,
      breaks = 20)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+![](unnamed-chunk-2-1.png)<!-- -->
 
 ``` r
 mean_steps <- mean(steps_per_day$steps)
@@ -39,7 +35,6 @@ median_steps <- median(steps_per_day$steps)
 - **Median steps per day:** 1.0765\times 10^{4}
 
 ## What is the average daily activity pattern?
-
 
 ``` r
 avg_steps_interval <- aggregate(steps ~ interval, data, mean, na.rm = TRUE)
@@ -52,7 +47,7 @@ plot(avg_steps_interval$interval, avg_steps_interval$steps,
      main = "Average Daily Activity Pattern")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 max_interval <- avg_steps_interval$interval[which.max(avg_steps_interval$steps)]
@@ -62,13 +57,11 @@ max_interval <- avg_steps_interval$interval[which.max(avg_steps_interval$steps)]
 
 ## Imputing missing values
 
-
 ``` r
 total_na <- sum(is.na(data$steps))
 ```
 
 - **Total number of missing values:** 2304
-
 
 ``` r
 # Imputing missing values using the mean for that 5-minute interval
@@ -89,7 +82,7 @@ hist(steps_per_day_imputed$steps,
      breaks = 20)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![](unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 mean_steps_imputed <- mean(steps_per_day_imputed$steps)
@@ -100,7 +93,6 @@ median_steps_imputed <- median(steps_per_day_imputed$steps)
 - **Median steps per day (imputed):** 1.0766189\times 10^{4}
 
 ## Are there differences in activity patterns between weekdays and weekends?
-
 
 ``` r
 data_imputed$day_type <- ifelse(weekdays(data_imputed$date) %in% c("Saturday", "Sunday"), 
@@ -119,4 +111,4 @@ xyplot(steps ~ interval | day_type,
        main = "Activity Patterns: Weekdays vs. Weekends")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](unnamed-chunk-6-1.png)<!-- -->
